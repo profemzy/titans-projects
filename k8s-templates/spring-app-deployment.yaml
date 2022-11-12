@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app-deployment
+  namespace: dev
+  labels:
+    app: spring-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-app
+  template:
+    metadata:
+      labels:
+        app: spring-app
+    spec:
+      containers:
+        - name: spring-app
+          image: profemzy/handson-app
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            periodSeconds: 10
+            initialDelaySeconds: 20
