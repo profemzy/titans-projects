@@ -1,13 +1,13 @@
 locals {
-  tag_name = "titans"
-  region = "europe-west1"
-  pod_range_name = "pod-ip-range"
+  tag_name           = "titans"
+  region             = "europe-west1"
+  pod_range_name     = "pod-ip-range"
   service_range_name = "service-ip-range"
 }
 
 # Titans Network(VPC)
 resource "google_compute_network" "titans_network" {
-  name = "${local.tag_name}-network"
+  name                    = "${local.tag_name}-network"
   auto_create_subnetworks = false
 }
 
@@ -29,9 +29,9 @@ resource "google_compute_subnetwork" "titans_subnet" {
 
 # Titans Kubernetes Cluster
 resource "google_container_cluster" "titans_cluster" {
-  name     = "${local.tag_name}-cluster"
-  location = local.region
-  network = google_compute_network.titans_network.name
+  name       = "${local.tag_name}-cluster"
+  location   = local.region
+  network    = google_compute_network.titans_network.name
   subnetwork = google_compute_subnetwork.titans_subnet.name
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -47,14 +47,16 @@ resource "google_container_node_pool" "titans_preemptible_nodes" {
   location   = local.region
   cluster    = google_container_cluster.titans_cluster.name
   node_count = 1
-
+  node_locations = [
+    "europe-west1-b"
+  ]
   node_config {
     preemptible  = true
     machine_type = "e2-medium"
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.titans-sa.email
-    oauth_scopes    = [
+    oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }

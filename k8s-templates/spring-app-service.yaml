@@ -4,7 +4,8 @@ metadata:
   name: spring-app-service
   namespace: dev
 spec:
-  type: LoadBalancer
+  type: NodePort
+
   selector:
     app: spring-app
   ports:
