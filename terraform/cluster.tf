@@ -37,6 +37,19 @@ resource "google_compute_subnetwork" "titans_subnet" {
   }
 }
 
+# Titans Firewall
+resource "google_compute_firewall" "default" {
+  name = "${local.tag_name}-firewall"
+  network = google_compute_network.titans_network.name
+
+  allow {
+    protocol = "tcp"
+    ports = ["80", "31079"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
 # Titans Kubernetes Cluster
 resource "google_container_cluster" "titans_cluster" {
   name       = "${local.tag_name}-cluster"
