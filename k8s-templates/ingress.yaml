@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: spring-app-ingress
+  name: metrics-app-ingress
   namespace: dev
   annotations:
     kubernetes.io/ingress.class: "gce"
@@ -14,6 +14,6 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: spring-app-service
+                name: metrics-app-service
                 port:
                   number: 80

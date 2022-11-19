@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-app-deployment
+  name: metrics-app-deployment
   namespace: dev
   labels:
-    app: spring-app
+    app: metrics-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: spring-app
+      app: metrics-app
   template:
     metadata:
       labels:
-        app: spring-app
+        app: metrics-app
     spec:
       containers:
-        - name: spring-app
-          image: profemzy/handson-app
+        - name: metrics-app
+          image: profemzy/prometrics
           ports:
             - containerPort: 8080
           livenessProbe:
             httpGet:
               port: 8080
-              path: /actuator/health
+              path: /prometheus
           readinessProbe:
             httpGet:
               port: 8080
-              path: /actuator/health
+              path: /prometheus
             periodSeconds: 10
             initialDelaySeconds: 20
