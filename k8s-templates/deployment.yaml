@@ -6,7 +6,7 @@ metadata:
   labels:
     app: metrics-app
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: metrics-app
