@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: metrics-app
-          image: profemzy/prometrics
+          image: profemzy/prometrics:v1
           ports:
             - containerPort: 8080
           livenessProbe:
