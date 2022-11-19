@@ -3,12 +3,22 @@ locals {
   region             = "europe-west1"
   pod_range_name     = "pod-ip-range"
   service_range_name = "service-ip-range"
+  project_name       = "playground-369107"
+  services_to_enable = ["compute.googleapis.com", "container.googleapis.com"]
+}
+
+# Enable Needed Project Services
+resource "google_project_service" "titans_project" {
+  for_each = toset(local.services_to_enable)
+  project  = local.project_name
+  service  = each.value
 }
 
 # Titans Network(VPC)
 resource "google_compute_network" "titans_network" {
   name                    = "${local.tag_name}-network"
   auto_create_subnetworks = false
+  depends_on              = [google_project_service.titans_project]
 }
 
 # Titans Sub-Network
