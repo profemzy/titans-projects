@@ -44,7 +44,7 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports = ["80", "31079"]
+    ports = ["80", "31079","31457"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -71,7 +71,8 @@ resource "google_container_node_pool" "titans_preemptible_nodes" {
   cluster    = google_container_cluster.titans_cluster.name
   node_count = 1
   node_locations = [
-    "europe-west1-b"
+    "europe-west1-b",
+    "europe-west1-c",
   ]
   node_config {
     preemptible  = true
