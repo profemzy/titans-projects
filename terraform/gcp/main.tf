@@ -14,5 +14,5 @@ terraform {
 provider "google" {
   # Configuration options
   project = "playground-369107"
-  region = "europe-west1"
+  region  = "europe-west1"
 }
