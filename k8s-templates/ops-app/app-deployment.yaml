@@ -16,16 +16,10 @@ spec:
     spec:
       containers:
         - name: ops-app
-          image: profemzy/prometrics:v1
+          image: profemzy/ops-app:v1
+          command:
+            - "tail"
+            - "-f"
+            - "/dev/null"
           ports:
-            - containerPort: 8080
-          livenessProbe:
-            httpGet:
-              port: 8080
-              path: /prometheus
-          readinessProbe:
-            httpGet:
-              port: 8080
-              path: /prometheus
-            periodSeconds: 10
-            initialDelaySeconds: 20
+            - containerPort: 80

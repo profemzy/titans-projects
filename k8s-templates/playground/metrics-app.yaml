@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ops-app-deployment
+  labels:
+    app: ops-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ops-app
+  template:
+    metadata:
+      labels:
+        app: ops-app
+    spec:
+      containers:
+        - name: ops-app
+          image: profemzy/prometrics:v1
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /prometheus
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /prometheus
+            periodSeconds: 10
+            initialDelaySeconds: 20
