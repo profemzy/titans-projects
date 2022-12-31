@@ -11,7 +11,7 @@ spec:
   tls:
     - secretName: web-ssl
       hosts:
-        - "ops.infotitans.se"
+        - ops.infotitans.se
   rules:
     - host: "ops.infotitans.se"
       http:
