@@ -16,10 +16,16 @@ spec:
     spec:
       containers:
         - name: ops-app
-          image: profemzy/ops-app:v1
-          command:
-            - "tail"
-            - "-f"
-            - "/dev/null"
+          image: profemzy/blaze-app:v0.1
           ports:
             - containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /fetchdata
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /fetchdata
+            periodSeconds: 10
+            initialDelaySeconds: 20
