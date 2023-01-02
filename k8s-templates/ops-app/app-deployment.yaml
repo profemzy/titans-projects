@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ops-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ops-app
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ops-app
-          image: profemzy/blaze-app:v0.1
+          image: profemzy/titans-app:v0.1
           ports:
             - containerPort: 80
           livenessProbe:
