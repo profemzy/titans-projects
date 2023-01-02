@@ -18,24 +18,4 @@ spec:
               service:
                 name: ops-app-service
                 port:
-                  number: 8080
-
----
-
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: ops-apps-ingress-cert
-spec:
-  domains:
-    - ops.infotitans.se
-
----
-apiVersion: networking.gke.io/v1beta1
-kind: FrontendConfig
-metadata:
-  name: ops-apps-frontend-config
-spec:
-  redirectToHttps:
-    enabled: true
-    responseCodeName: PERMANENT_REDIRECT
+                  number: 80
