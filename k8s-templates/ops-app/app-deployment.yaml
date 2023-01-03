@@ -15,8 +15,8 @@ spec:
         app: ops-app
     spec:
       containers:
-        - name: ops-app
-          image: profemzy/titans-app:v0.2
+        - name: ops-appz
+          image: profemzy/blaze-app:v0.1
           ports:
             - containerPort: 80
           livenessProbe:
