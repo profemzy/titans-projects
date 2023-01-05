@@ -5,12 +5,13 @@ resource "google_compute_subnetwork" "titans_subnet" {
   region        = local.region
   network       = google_compute_network.titans_network.id
   secondary_ip_range {
-    range_name    = local.pod_range_name
-    ip_cidr_range = "192.168.10.0/24"
-  }
-  secondary_ip_range {
     range_name    = local.service_range_name
-    ip_cidr_range = "192.168.20.0/24"
+    ip_cidr_range = "192.168.0.0/16"
+  }
+
+  secondary_ip_range {
+    range_name    = local.pod_range_name
+    ip_cidr_range = "172.16.0.0/16"
   }
 }
 

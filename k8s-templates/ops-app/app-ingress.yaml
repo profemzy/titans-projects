@@ -3,16 +3,21 @@ kind: Ingress
 metadata:
   name: ops-app-ingress
   annotations:
-    kubernetes.io/ingress.class: "gce"
-    kubernetes.io/ingress.global-static-ip-name: web-ip
-    networking.gke.io/managed-certificates: ops-apps-ingress-cert
-    networking.gke.io/v1beta1.FrontendConfig: "ops-apps-frontend-config"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/issuer: letsencrypt-production
 spec:
+  tls:
+    - secretName: ops-app-ssl
+      hosts:
+        - ops.infotitans.se
+        - argocd.infotitans.se
   rules:
     - host: ops.infotitans.se
       http:
         paths:
-          - path: "/"
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -22,7 +27,7 @@ spec:
     - host: argocd.infotitans.se
       http:
         paths:
-          - path: "/"
+          - path: /
             pathType: Prefix
             backend:
               service:

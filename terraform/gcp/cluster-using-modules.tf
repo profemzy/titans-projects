@@ -26,7 +26,7 @@ data "google_client_config" "default" {}
 
 # Titans Kubernetes Cluster
 module "gke" {
-  source  = "terraform-google-modules/kubernetes-engine/google"
+  source = "terraform-google-modules/kubernetes-engine/google"
 
   project_id                 = local.project_name
   name                       = "${local.tag_name}-cluster"
@@ -44,8 +44,25 @@ module "gke" {
       name               = "${local.tag_name}-node-pool"
       machine_type       = "e2-medium"
       node_locations     = "europe-west1-b,europe-west1-c"
-      min_count          = 2
-      max_count          = 3
+      autoscaling        = false
+      local_ssd_count    = 0
+      spot               = false
+      disk_size_gb       = 100
+      disk_type          = "pd-standard"
+      image_type         = "COS_CONTAINERD"
+      enable_gcfs        = false
+      enable_gvnic       = false
+      auto_repair        = true
+      auto_upgrade       = true
+      service_account    = google_service_account.titans-sa.email
+      preemptible        = true
+      initial_node_count = 0
+    },
+    {
+      name               = "${local.tag_name}-node-pool-b"
+      machine_type       = "e2-standard-2"
+      node_locations     = "europe-west1-b"
+      autoscaling        = false
       local_ssd_count    = 0
       spot               = false
       disk_size_gb       = 100
