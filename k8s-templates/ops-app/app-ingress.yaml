@@ -13,6 +13,7 @@ spec:
       hosts:
         - ops.infotitans.se
         - argocd.infotitans.se
+        - demo.infotitans.se
   rules:
     - host: ops.infotitans.se
       http:
@@ -32,5 +33,15 @@ spec:
             backend:
               service:
                 name: argocd-server
+                port:
+                  number: 80
+    - host: demo.infotitans.se
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-grafana
                 port:
                   number: 80
