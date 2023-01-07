@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ops-app-deployment
+  name: metrics-app-deployment
   labels:
-    app: ops-app
+    app: metrics-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: ops-app
+      app: metrics-app
   template:
     metadata:
       labels:
-        app: ops-app
+        app: metrics-app
     spec:
       containers:
-        - name: ops-app
+        - name: metrics-app
           image: profemzy/prometrics:v1
           ports:
             - containerPort: 8080
