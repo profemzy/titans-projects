@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ops-appz
-          image: profemzy/blaze-app:v0.1
+          image: profemzy/blaze-app:v0.2
           ports:
             - containerPort: 80
           livenessProbe:
