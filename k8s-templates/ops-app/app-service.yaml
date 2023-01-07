@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ops-app-service
+  labels:
+     job: ops-app-service
+     app: ops-app
 spec:
   type: ClusterIP
   selector:
