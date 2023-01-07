@@ -22,10 +22,10 @@ spec:
           livenessProbe:
             httpGet:
               port: 80
-              path: /fetchdata
+              path: /metrics
           readinessProbe:
             httpGet:
               port: 80
-              path: /fetchdata
+              path: /metrics
             periodSeconds: 10
             initialDelaySeconds: 20
