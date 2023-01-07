@@ -839,7 +839,15 @@ grafana:
 
   ## Configure additional grafana datasources (passed through tpl)
   ## ref: http://docs.grafana.org/administration/provisioning/#datasources
-  additionalDataSources: []
+  additionalDataSources:
+      - name: victoriametrics
+        access: proxy
+        editable: true
+        type: prometheus
+        url: http://vmcluster-victoria-metrics-cluster-vmselect.argocd.svc.cluster.local:8481/select/0/prometheus/
+        orgId: 1
+        isDefault: false
+        updateIntervalSeconds: 10
   # - name: prometheus-sample
   #   access: proxy
   #   basicAuth: true
@@ -2657,7 +2665,8 @@ prometheus:
 
     ## The remote_write spec configuration for Prometheus.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#remotewritespec
-    remoteWrite: []
+    remoteWrite:
+      - url: "http://vmcluster-victoria-metrics-cluster-vminsert.argocd.svc.cluster.local:8480/insert/0/prometheus/"
     # - url: http://remote1/push
     ## additionalRemoteWrite is appended to remoteWrite
     additionalRemoteWrite: []
