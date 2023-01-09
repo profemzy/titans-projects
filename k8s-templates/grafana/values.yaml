@@ -1,0 +1,36 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: victoriametrics
+        type: prometheus
+        orgId: 1
+        url: http://vmcluster-victoria-metrics-cluster-vmselect.argocd.svc.cluster.local:8481/select/0/prometheus/
+        access: proxy
+        isDefault: true
+        updateIntervalSeconds: 10
+        editable: true
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+
+  dashboards:
+    default:
+      victoriametrics:
+        gnetId: 10229
+        revision: 22
+        datasource: victoriametrics
+      kubernetes:
+        gnetId: 14205
+        revision: 1
+        datasource: victoriametrics
