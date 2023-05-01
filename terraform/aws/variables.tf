@@ -9,5 +9,10 @@ variable "subnets_cidr" {
 
 variable "azs" {
   type    = list(string)
-  default = ["eu-north-1a", "eu-north-1b"]
+  default = ["us-west-1a", "us-west-1b"]
+}
+
+variable "environment" {
+  type = string
+  default = "dev"
 }

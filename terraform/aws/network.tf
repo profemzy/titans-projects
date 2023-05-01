@@ -15,7 +15,7 @@ resource "aws_internet_gateway" "titans_igw" {
 }
 
 # Subnets : public
-resource "aws_subnet" "titans-subnet" {
+resource "aws_subnet" "titans_subnet" {
   count                   = length(var.subnets_cidr)
   vpc_id                  = aws_vpc.titans_network.id
   cidr_block              = element(var.subnets_cidr, count.index)
@@ -27,7 +27,7 @@ resource "aws_subnet" "titans-subnet" {
 }
 
 # Route table: attach Internet Gateway
-resource "aws_route_table" "public_rt" {
+resource "aws_route_table" "titans_public_igw" {
   vpc_id = aws_vpc.titans_network.id
   route {
     cidr_block = "0.0.0.0/0"
@@ -39,8 +39,8 @@ resource "aws_route_table" "public_rt" {
 }
 
 # Route table association with public subnets
-resource "aws_route_table_association" "a" {
+resource "aws_route_table_association" "titans_rt_association" {
   count          = length(var.subnets_cidr)
-  subnet_id      = element(aws_subnet.titans-subnet.*.id, count.index)
-  route_table_id = aws_route_table.public_rt.id
+  subnet_id      = element(aws_subnet.titans_subnet.*.id, count.index)
+  route_table_id = aws_route_table.titans_public_igw.id
 }
