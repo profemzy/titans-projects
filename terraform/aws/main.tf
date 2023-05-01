@@ -1,6 +1,6 @@
 terraform {
 
-   backend "s3" {
+  backend "s3" {
     bucket = "s3-uw1-terraform-eks-demo-infra-dev-terraform-backend-30"
     key    = "terraform-eks-demo-infra/us-west-1/dev/terraform.tfstate"
     region = "us-west-1"

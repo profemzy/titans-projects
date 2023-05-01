@@ -5,7 +5,7 @@ module "eks" {
   cluster_name    = "${local.tag_name}-cluster"
   cluster_version = "1.26"
 
-  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access = true
 
   cluster_addons = {
     coredns = {
@@ -32,7 +32,7 @@ module "eks" {
     }
   }
 
-   # EKS Managed Node Group(s)
+  # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
     instance_types = ["t3.medium"]
   }
