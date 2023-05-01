@@ -32,22 +32,6 @@ module "eks" {
     }
   }
 
-  # EKS Managed Node Group(s)
-  eks_managed_node_group_defaults = {
-    instance_types = ["t3.medium"]
-  }
-
-  eks_managed_node_groups = {
-    ops = {
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
-
-      instance_types = ["t3.medium"]
-      capacity_type  = "SPOT"
-    }
-  }
-
   # Fargate Profile(s)
   fargate_profiles = {
     default = {
