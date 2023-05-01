@@ -1,46 +1,17 @@
-# VPC
-resource "aws_vpc" "titans_network" {
-  cidr_block = var.vpc_cidr
-  tags = {
-    Name = "${local.tag_name}-network"
-  }
-}
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
 
-# Internet Gateway
-resource "aws_internet_gateway" "titans_igw" {
-  vpc_id = aws_vpc.titans_network.id
-  tags = {
-    Name = "main"
-  }
-}
+  name = "${local.tag_name}-network"
+  cidr = var.vpc_cidr
 
-# Subnets : public
-resource "aws_subnet" "titans_subnet" {
-  count                   = length(var.subnets_cidr)
-  vpc_id                  = aws_vpc.titans_network.id
-  cidr_block              = element(var.subnets_cidr, count.index)
-  availability_zone       = element(var.azs, count.index)
-  map_public_ip_on_launch = true
-  tags = {
-    Name = "${local.tag_name}-subnet-${count.index + 1}"
-  }
-}
+  azs             = var.azs
+  private_subnets = var.private_subnets_cidr
+  public_subnets  = var.public_subnets_cidr
+  enable_nat_gateway = true
+  enable_vpn_gateway = false
 
-# Route table: attach Internet Gateway
-resource "aws_route_table" "titans_public_igw" {
-  vpc_id = aws_vpc.titans_network.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.titans_igw.id
-  }
   tags = {
-    Name = "${local.tag_name}-publicRouteTable"
+    Terraform = "true"
+    Environment = var.environment
   }
-}
-
-# Route table association with public subnets
-resource "aws_route_table_association" "titans_rt_association" {
-  count          = length(var.subnets_cidr)
-  subnet_id      = element(aws_subnet.titans_subnet.*.id, count.index)
-  route_table_id = aws_route_table.titans_public_igw.id
 }
